@@ -14,7 +14,7 @@ public class MyGenerateTrajectory {
 
     //Generate trajectory given a list of waypoints
     public static Trajectory generateTrajectory( List<Translation2d> wp, TrajectoryConfig config, double R) {
-        //Generate intermediate waypoints
+
         List<Translation2d> wp2 = new ArrayList<Translation2d>();
         List<Pose2d> waypoints = new ArrayList<Pose2d>();
         Pose2d p;
