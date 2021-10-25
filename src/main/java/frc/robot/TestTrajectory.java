@@ -5,18 +5,21 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.constraint.CentripetalAccelerationConstraint;
 
 //Create the necessary waypoints to test
 //Integrate with A* ????????????????????????????????????
 public class TestTrajectory {
-    private static TrajectoryConfig config = new TrajectoryConfig(0.5, 0.5);
-
+    private static CentripetalAccelerationConstraint curveConstraint = new CentripetalAccelerationConstraint(1.0);
+    private static TrajectoryConfig config = new TrajectoryConfig(0.5, 0.5).addConstraint(curveConstraint);
     //Different waypoints for testing
     private static List<Translation2d> waypoints = List.of(
       new Translation2d(0.0, 0.0), //start
-      new Translation2d(1.0, 0.5), 
-      new Translation2d(1.0, 1.0), 
-      new Translation2d(0.1, 1.0)
+      new Translation2d(0.0, 1.0), 
+      new Translation2d(1.0, 1.0)     
+      // new Translation2d(1.0, 0.5), 
+      // new Translation2d(1.0, 1.0), 
+      // new Translation2d(0.0, 1.0)
   
     );
     private static List<Translation2d> waypoints2 = List.of(

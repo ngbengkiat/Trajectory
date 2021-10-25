@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 //import java.awt.List;
 import java.awt.geom.GeneralPath;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.swing.JComponent;
@@ -18,7 +19,7 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 class MyWaypointsPlot extends JComponent {
   //Drawing sale
   private static final int SCALE = 200;
-
+  
     public void drawCircle(Graphics2D g, int x, int y, int r) {
         x = x-(r/2);
         y = y-(r/2);
@@ -49,6 +50,10 @@ class MyWaypointsPlot extends JComponent {
       for (double t=0.0; t<=traj.getTotalTimeSeconds(); t+=dT) {
           p = traj.sample(t).poseMeters;
           path.lineTo(p.getTranslation().getX()*SCALE, p.getTranslation().getY()*SCALE);
+
+          //Print to check velocity
+          System.out.printf("x:%5.2f, y:%5.2f, v:%5.2f\n", p.getTranslation().getX(), 
+          p.getTranslation().getY(), traj.sample(t).velocityMetersPerSecond);
       }
       g2.draw(path);
 
