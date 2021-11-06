@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 
 class MyWaypointsPlot extends JComponent {
   //Drawing sale
-  private static final int SCALE = 200;
+  private static final int SCALE = 400;
   
     public void drawCircle(Graphics2D g, int x, int y, int r) {
         x = x-(r/2);
@@ -37,7 +37,8 @@ class MyWaypointsPlot extends JComponent {
       //////////////////////////////////////////////////////////////
       // Plot trajectory path
       //////////////////////////////////////////////////////////////
-      Trajectory traj = TestTrajectory.getTrajectory();
+      TestTrajectory testTrajectory = new TestTrajectory();
+      Trajectory traj = testTrajectory.getTrajectory();
 
       double dT = 0.02;
       int N = (int)(traj.getTotalTimeSeconds()/dT) + 1;
@@ -52,8 +53,8 @@ class MyWaypointsPlot extends JComponent {
           path.lineTo(p.getTranslation().getX()*SCALE, p.getTranslation().getY()*SCALE);
 
           //Print to check velocity
-          System.out.printf("x:%5.2f, y:%5.2f, v:%5.2f\n", p.getTranslation().getX(), 
-          p.getTranslation().getY(), traj.sample(t).velocityMetersPerSecond);
+          //System.out.printf("t:%5.2f, x:%5.2f, y:%5.2f, v:%5.2f\n", t, p.getTranslation().getX(), 
+          //p.getTranslation().getY(), traj.sample(t).velocityMetersPerSecond);
       }
       g2.draw(path);
 
@@ -61,7 +62,7 @@ class MyWaypointsPlot extends JComponent {
       //Plot waypoints for comparison
       //////////////////////////////////////////////////////////////
       g2.setPaint(Color.BLUE);
-      List<Translation2d> waypoints = TestTrajectory.getWayPoints();
+      List<Translation2d> waypoints = testTrajectory.getIntermediateWP();
       for (int i=0; i<waypoints.size(); i++) {
         drawCircle(g2, (int)(waypoints.get(i).getX()*SCALE), (int)(waypoints.get(i).getY()*SCALE), 5 );
       }
