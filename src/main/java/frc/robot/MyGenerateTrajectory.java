@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 
 public class MyGenerateTrajectory {
     private List<Translation2d> m_IntermediateWP;
+    private Trajectory mTrajectory;
     
     //Create intermediate way points as A* output with right angle path
     // are not suitable for trajectory generator
@@ -49,9 +50,10 @@ public class MyGenerateTrajectory {
                    wp2.add(t12);  // Not for quintic
                 }
 
-                wp2.add(t1);
+                if (!cubicFlag) {
+                    wp2.add(t1);
+                }
                 wp2.add(t2);
-
             }
         }
         /////
@@ -100,15 +102,15 @@ public class MyGenerateTrajectory {
 
         //quintic hermite splines
         //Can control waypoints angle
-        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(waypoints, config);
+        mTrajectory = TrajectoryGenerator.generateTrajectory(waypoints, config);
 
         //Debug print out
-        // for (double i=0.0; i<=traj.getTotalTimeSeconds(); i+=0.02) {
-        //      p = trajectory.sample(i).poseMeters;
+        // for (double i=0.0; i<=mTrajectory.getTotalTimeSeconds(); i+=0.02) {
+        //      p = mTrajectory.sample(i).poseMeters;
         //     System.out.println(p);
         // }
 
-        return trajectory;    
+        return mTrajectory;    
     }
 
     //Generate trajectory given a list of waypoints
@@ -121,6 +123,8 @@ public class MyGenerateTrajectory {
         Pose2d start, end;
 
         wp2 = AddIntermediateWayPoints(wp, R, true);
+        //wp2.addAll(wp);
+        //m_IntermediateWP = wp2;
 
         //Calculate start end points angle.
         //This allows us to control the spline curve
@@ -133,6 +137,7 @@ public class MyGenerateTrajectory {
         double dy = y1 - y0;
         Rotation2d angle = new Rotation2d(Math.atan2(dy, dx));
         start = new Pose2d(x0, y0, angle);
+        System.out.println(start);
 
         int i = wp2.size()-2;
         x0 = wp2.get(i).getX();
@@ -143,18 +148,19 @@ public class MyGenerateTrajectory {
         dy = y1 - y0;
         angle = new Rotation2d(Math.atan2(dy, dx));
         end = new Pose2d(x1, y1, angle);
+        System.out.println(end);
 
         for ( i=1; i<(wp2.size()-1); i++){
 
             waypoints.add(wp2.get(i));
-            //System.out.println(wp2.get(i));
+            System.out.println(wp2.get(i));
 
         }
 
 
         // Clamped cubic spline
         // Generates car-like path
-        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+        mTrajectory = TrajectoryGenerator.generateTrajectory(
             // Start at the origin facing the +X direction
             start,
             // Pass through these waypoints
@@ -164,11 +170,15 @@ public class MyGenerateTrajectory {
             config);
 
         //Debug
-        for (double t=0.0; t<=trajectory.getTotalTimeSeconds(); t+=0.02) {
-            Pose2d p = trajectory.sample(t).poseMeters;
-            //System.out.println(p);
-       }
-        return trajectory;    
+    //     for (double t=0.0; t<=mTrajectory.getTotalTimeSeconds(); t+=0.02) {
+    //         Pose2d p = mTrajectory.sample(t).poseMeters;
+    //         System.out.println(p);
+    //    }
+        return mTrajectory;    
+    }
+
+    public Trajectory getTrajectory() {
+        return mTrajectory;
     }
 
     public List<Translation2d> getIntermediateWP() {

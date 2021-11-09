@@ -12,16 +12,17 @@ import edu.wpi.first.wpilibj.trajectory.constraint.CentripetalAccelerationConstr
 //Integrate with A* ????????????????????????????????????
 public class TestTrajectory {
   HolonomicDriveController m;
+
+    //Set max velocity, acceleration and centripedal acceleration (turn speed)
     private CentripetalAccelerationConstraint curveConstraint = new CentripetalAccelerationConstraint(1.0);
     private TrajectoryConfig config = new TrajectoryConfig(0.5, 0.5).addConstraint(curveConstraint);
     //Different waypoints for testing
     private List<Translation2d> waypoints = List.of(
-      new Translation2d(0.5, 0.0), //start
+      new Translation2d(0.0, 0.0), //start
       new Translation2d(0.5, 0.5), 
-      new Translation2d(1.0, 0.5)
-      // new Translation2d(1.0, 0.5), 
-      // new Translation2d(1.0, 1.0), 
-      // new Translation2d(0.0, 1.0)
+      new Translation2d(1.0, 0.5), 
+      new Translation2d(1.0, 1.0), 
+      new Translation2d(0.0, 1.0)
   
     );
     private List<Translation2d> waypoints2 = List.of(
@@ -56,8 +57,8 @@ public class TestTrajectory {
 
     private MyGenerateTrajectory myGenerateTrajectory = new MyGenerateTrajectory();
     private Trajectory trajectory =
-    myGenerateTrajectory.generateTrajectoryClampedCubic(waypoints2, config, 0.04);
-    //myGenerateTrajectory.generateTrajectoryQuinticHermite(waypoints2, config, 0.05);
+    //myGenerateTrajectory.generateTrajectoryClampedCubic(waypoints, config, 0.05);
+    myGenerateTrajectory.generateTrajectoryQuinticHermite(waypoints, config, 0.05);
     private List<Translation2d> myIntermediateWP = myGenerateTrajectory.getIntermediateWP();
     public Trajectory getTrajectory() {
         return trajectory;
