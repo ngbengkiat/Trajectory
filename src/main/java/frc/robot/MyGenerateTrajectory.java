@@ -93,7 +93,7 @@ public class MyGenerateTrajectory {
                 p = new Pose2d(x0, y0, angle);
                 waypoints.add(p);
                 //Take care of straight line path. 2 waypoints only
-                if (i+1==N-1) {
+                if ((i+1)==(N-1)) {
                     p = new Pose2d(x1, y1, angle);
                     waypoints.add(p);    
                 }
@@ -109,7 +109,7 @@ public class MyGenerateTrajectory {
                 if (len > R*2) {
                     p = new Pose2d(x0+R*angle.getCos(), y0+R*angle.getSin(), angle);
                     waypoints.add(p);
-                    if (i+1==N-1) {
+                    if ((i+1)==(N-1)) {
                         //Add end point
                         p = new Pose2d(x1, y1, angle);
                         waypoints.add(p);    
@@ -119,11 +119,18 @@ public class MyGenerateTrajectory {
                         waypoints.add(p);
                     }
                 }
-            }
-            m_TrajectoryWP = waypoints;
-            //System.out.println(p);
+                else {
+                    if ((i+1)==(N-1)) {
+                        //Add end point
+                        p = new Pose2d(x1, y1, angle);
+                        waypoints.add(p);    
+                    }
 
+                }
+            }
+            //System.out.println(p);
         }
+        m_TrajectoryWP = waypoints;
 
         //quintic hermite splines
         //Can control waypoints angle
