@@ -203,11 +203,12 @@ public class GridPanel extends JPanel implements PropertyChangeListener {
             // Plot waypoints for comparison
             //////////////////////////////////////////////////////////////
             //Astar waypoints
-            g.setPaint(Color.RED);
-            for (int i = 0; i < m_pathWayPoints.size(); i++) {
-                drawCircle(g, (int) (m_pathWayPoints.get(i).getX() * SCALE) + Tile.TILE_SIZE / 2, 
-                        (int) (m_pathWayPoints.get(i).getY() * SCALE) + Tile.TILE_SIZE / 2, 4);
-            }
+            // Display for debug! Turn off as too cluttered
+            // g.setPaint(Color.RED);
+            // for (int i = 0; i < m_pathWayPoints.size(); i++) {
+            //     drawCircle(g, (int) (m_pathWayPoints.get(i).getX() * SCALE) + Tile.TILE_SIZE / 2, 
+            //             (int) (m_pathWayPoints.get(i).getY() * SCALE) + Tile.TILE_SIZE / 2, 4);
+            // }
 
             //Trajectory waypoints
             g.setPaint(Color.BLUE);

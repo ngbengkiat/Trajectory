@@ -125,6 +125,8 @@ public class AStarAlgorithm {
         m_path = new ArrayList<>();
         m_pathWayPoints = new ArrayList<>();
 
+        //retrace the point from end to start.
+        //current should be end point.
         m_path.add(current);
 
         while (temp.getParent() != null) {
@@ -132,6 +134,9 @@ public class AStarAlgorithm {
             temp = temp.getParent();
         }
 
+        //Generate the waypoints from the path points.
+        //Waypoints are points where path direction change
+        //This make the path more compact.
         boolean first = true;
         double curDir = 0;
         for (Node n : m_path) {
@@ -151,6 +156,9 @@ public class AStarAlgorithm {
 
             }
         }
+        //If end point is not in waypoints, add it in.
+        if (m_pathWayPoints.get(m_pathWayPoints.size()-1) != m_path.get(m_path.size()-1))
+            m_pathWayPoints.add(m_path.get(m_path.size()-1));
     }
 
     private Node getLowestF() {
