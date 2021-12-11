@@ -256,7 +256,7 @@ public class GridPanel extends JPanel implements PropertyChangeListener {
                     Tile t = (Tile) n;
                     //Convert from cell unit to metre
                     Translation2d pt = new Translation2d(t.getX(), t.getY());
-                    m_pathWayPoints.add(Layout.ConvertCell_m(pt));
+                    m_pathWayPoints.add(Layout.Convert_cell_m(pt));
                 }
             }
         }

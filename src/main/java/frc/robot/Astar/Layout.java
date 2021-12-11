@@ -1,15 +1,17 @@
 package frc.robot.Astar;
 
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 
 public class Layout {
     // Dimension of layout in real unit
     public static final int x_size_mm = 4038;
     public static final int y_size_mm = 2038;
-    public static final int grid_size_mm = 25;
-    public static final float grid_size_m = 25/1000.0f;
-    public static final int X_SIZE = Math.round((float)x_size_mm/grid_size_mm)+1; //??
-    public static final int Y_SIZE = Math.round((float)y_size_mm/grid_size_mm)+1;
+    public static final int tile_size_mm = 25;
+    public static final float tile_size_meter = 25/1000.0f;
+    public static final int X_SIZE = Math.round((float)x_size_mm/tile_size_mm)+1; //??
+    public static final int Y_SIZE = Math.round((float)y_size_mm/tile_size_mm)+1;
     
     //List all fixed walls in layout here
     public static final int walls_mm[][] = {
@@ -96,11 +98,11 @@ public class Layout {
     // Initial Position for robot to go to for disposing hazmat
     public static final int HazMatBinPos[] = {500, 980, 180};
 
+    // Robot start position. Also the cleaning position
+    public static final int startPos[] = {340, 340,  0};
 
     private int walls[][];
     private int obs[][];
-
-
 
     public Layout() {
         int i, j;
@@ -109,7 +111,7 @@ public class Layout {
         walls = new int[walls_mm.length][4];
         for (i=0; i< walls_mm.length; i++) {
             for (j=0; j<4; j++) {
-                walls[i][j] = Math.round((float)walls_mm[i][j]/grid_size_mm);
+                walls[i][j] = Math.round((float)walls_mm[i][j]/tile_size_mm);
             }
         }
 
@@ -117,21 +119,26 @@ public class Layout {
         obs = new int[obs_mm.length][5];
         for (i=0; i< obs_mm.length; i++) {
             for (j=0; j<4; j++) {
-                obs[i][j] = Math.round((float)obs_mm[i][j]/grid_size_mm);
+                obs[i][j] = Math.round((float)obs_mm[i][j]/tile_size_mm);
             }
             obs[i][4] = obs_mm[i][4];  //Angle in degree stays the same
         }
 
     }
 
-    static public Translation2d ConvertCell_m(Translation2d pt) {
-        Translation2d pt_m = new Translation2d(pt.getX()*grid_size_m, pt.getY()*grid_size_m);
+    static public Translation2d Convert_cell_m(Translation2d pt) {
+        Translation2d pt_m = new Translation2d(pt.getX()*tile_size_meter, pt.getY()*tile_size_meter);
         return pt_m;
     }
 
     static public int Convert_m_cell (double m) {
-        return Math.round((float)m*1000/grid_size_mm);
+        return Math.round((float)m*1000/tile_size_mm);
     }
+    
+    static public Pose2d Convert_mm_Pose2d (int pos[]) {
+        return new Pose2d(pos[0]/1000.0f, pos[1]/1000.0f, new Rotation2d(pos[2]*Math.PI/180));
+    }
+
     public int [][] getWalls() {
         return walls;
     }

@@ -52,7 +52,7 @@ public class Grid extends Network{
     public void ExpandObstacles(float robotRadius_mm) {
 
         //Expand obstacle by robot radius. These are no entry zones
-        int robotRadius = Math.round((float)robotRadius_mm/Layout.grid_size_mm);
+        int robotRadius = Math.round((float)robotRadius_mm/Layout.tile_size_mm);
         for (int k=0; k<robotRadius; k++) {
             for (int x = 0; x < xSize; x++) {
                 for (int y = 0; y < ySize; y++) {
@@ -78,10 +78,10 @@ public class Grid extends Network{
         }
 
         //Expand obstacle by path cost. These are high cost cell to force robot away from obstacle
-        //It is possible for robot to enter these cells.
+        //It is possible for robot to enter these cells (tiles).
         //Number of cells to expand and their values are defined here
         double keepOutDist_mm = 150;      
-        int numOfCells = Math.round((float)keepOutDist_mm/Layout.grid_size_mm);  
+        int numOfCells = Math.round((float)keepOutDist_mm/Layout.tile_size_mm);  
         double expansion[] = new double[numOfCells];
         double factor = Math.exp(Math.log(0.1f)/numOfCells);
         double cost = Node.maxObsValue*factor;
