@@ -8,8 +8,8 @@ public class Layout {
     // Dimension of layout in real unit
     public static final int x_size_mm = 4038;
     public static final int y_size_mm = 2038;
-    public static final int tile_size_mm = 25;
-    public static final float tile_size_meter = 25/1000.0f;
+    public static final int tile_size_mm = 20;
+    public static final float tile_size_meter = tile_size_mm/1000.0f;
     public static final int X_SIZE = Math.round((float)x_size_mm/tile_size_mm)+1; //??
     public static final int Y_SIZE = Math.round((float)y_size_mm/tile_size_mm)+1;
     

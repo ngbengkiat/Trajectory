@@ -27,7 +27,7 @@ public class Main {
         Layout layout = new Layout();
         Grid grid = new Grid(layout);
  
-        grid.ExpandObstacles(50);  //100
+        grid.ExpandObstacles(150);  //100
         //Create solver
         astar = new AStarAlgorithm(grid);
         

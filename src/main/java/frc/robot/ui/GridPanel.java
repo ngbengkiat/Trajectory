@@ -31,7 +31,7 @@ public class GridPanel extends JPanel implements PropertyChangeListener {
     /**
      *
      */
-    private static final int SCALE = 6*Layout.Convert_m_cell(1);
+    private static final int SCALE = Tile.TILE_SIZE*Layout.Convert_m_cell(1);
     private static final long serialVersionUID = 1L;
     private Grid grid;
     private ArrayList<Tile> m_path=null;
